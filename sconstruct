@@ -23,3 +23,4 @@ env = Environment(
 env.Program('bin/iife', glob(["iife"]))
 env.Program('bin/range', glob(["range"]))
 env.Program('bin/unique_cast', glob(["unique_cast"]))
+env.Program('bin/vectorStuff', glob(["vectorStuff"]))
