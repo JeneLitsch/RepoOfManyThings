@@ -21,3 +21,4 @@ env = Environment(
 	LINKCOMSTR = "[Linking] $TARGET")
 
 env.Program('bin/iife', glob(["iife"]))
+env.Program('bin/range', glob(["range"]))
