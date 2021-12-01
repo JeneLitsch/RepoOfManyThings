@@ -10,7 +10,7 @@ def glob(dirs):
 	return files
 
 env = Environment(
-	CXX = "g++-10",
+	CXX = "g++",
 	CXXFLAGS = flags,
 	CPPPATH = ["."],
 	CPPDEFINES = [],
@@ -20,7 +20,11 @@ env = Environment(
 	CXXCOMSTR = "[Compiling] $TARGET",
 	LINKCOMSTR = "[Linking] $TARGET")
 
-env.Program('bin/iife', glob(["iife"]))
-env.Program('bin/range', glob(["range"]))
-env.Program('bin/unique_cast', glob(["unique_cast"]))
-env.Program('bin/vectorStuff', glob(["vectorStuff"]))
+def compile(env, dir):
+	env.Program('bin/' + dir, glob([dir]))
+
+compile(env, "iife")
+compile(env, "range")
+compile(env, "unique_cast")
+compile(env, "vectorStuff")
+compile(env, "ltnIO")
