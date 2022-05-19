@@ -10,7 +10,7 @@ def glob(dirs):
 	return files
 
 env = Environment(
-	CXX = "g++",
+	CXX = "clang++-12",
 	CXXFLAGS = flags,
 	CPPPATH = ["."],
 	CPPDEFINES = [],
@@ -31,3 +31,4 @@ compile(env, "ltnIO")
 compile(env, "log")
 compile(env, "gradient")
 compile(env, "automaton")
+compile(env, "error_default")
