@@ -1,6 +1,8 @@
 flags = [
 	"-std=c++2a",
-	"-Wall", "-Wextra", "-Wconversion", "-Wunreachable-code", "-Wuninitialized", "-pedantic-errors" , "-Wold-style-cast", "-Wno-error=unused-variable"
+	# "-Wall", "-Wextra", "-Wconversion", "-Wunreachable-code", "-Wuninitialized", "-pedantic-errors" , "-Wold-style-cast", "-Wno-error=unused-variable", "-Wnarrowing=false",
+	"-masm=intel"
+
 ]
 
 def glob(dirs):
@@ -10,7 +12,8 @@ def glob(dirs):
 	return files
 
 env = Environment(
-	CXX = "clang++-12",
+	# CXX = "clang++-12",
+	CXX = "g++-10",
 	CXXFLAGS = flags,
 	CPPPATH = ["."],
 	CPPDEFINES = [],
@@ -23,12 +26,14 @@ env = Environment(
 def compile(env, dir):
 	env.Program('bin/' + dir, glob([dir]))
 
-compile(env, "iife")
-compile(env, "range")
-compile(env, "unique_cast")
-compile(env, "vectorStuff")
-compile(env, "ltnIO")
-compile(env, "log")
-compile(env, "gradient")
-compile(env, "automaton")
-compile(env, "error_default")
+# compile(env, "iife")
+# compile(env, "range")
+# compile(env, "unique_cast")
+# compile(env, "vectorStuff")
+# compile(env, "ltnIO")
+# compile(env, "log")
+# compile(env, "gradient")
+# compile(env, "automaton")
+# compile(env, "error_default")
+# compile(env, "fixed_string")
+compile(env, "jit")
