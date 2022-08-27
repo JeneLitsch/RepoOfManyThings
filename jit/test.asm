@@ -3,7 +3,8 @@
 .type add, @function
 add:
 	.cfi_startproc
-	lea eax, [rdi+rsi]
+	lea r12, [rsi+1+rdi+4]
+	mov rax, r12
 	ret
 	.cfi_endproc
 	

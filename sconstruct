@@ -15,9 +15,14 @@ env = Environment(
 	# CXX = "clang++-12",
 	CXX = "g++-10",
 	CXXFLAGS = flags,
-	CPPPATH = ["."],
+	CPPPATH = [
+		".",
+		"./libs/stdxx"
+	],
 	CPPDEFINES = [],
-	LIBS = [],
+	LIBS = [
+		"-lncurses"
+	],
 	LIBPATH = ".",
 	SCONS_CXX_STANDART="c++20",
 	CXXCOMSTR = "[Compiling] $TARGET",
@@ -36,4 +41,6 @@ def compile(env, dir):
 # compile(env, "automaton")
 # compile(env, "error_default")
 # compile(env, "fixed_string")
-compile(env, "jit")
+# compile(env, "jit")
+# compile(env, "ascii_game")
+compile(env, "type_deduction")

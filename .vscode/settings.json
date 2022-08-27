@@ -51,6 +51,17 @@
 		"variant": "cpp",
 		"cstring": "cpp",
 		"list": "cpp",
-		"span": "cpp"
+		"span": "cpp",
+		"chrono": "cpp",
+		"codecvt": "cpp",
+		"condition_variable": "cpp",
+		"ctime": "cpp",
+		"ratio": "cpp",
+		"future": "cpp",
+		"iomanip": "cpp",
+		"mutex": "cpp",
+		"numbers": "cpp",
+		"stop_token": "cpp",
+		"thread": "cpp"
 	}
 }

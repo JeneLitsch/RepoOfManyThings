@@ -1,11 +1,8 @@
 #include <iostream>
-#include <array>
-#include <vector>
 #include <span>
-#include <memory>
+#include <fstream>
+#include <sstream>
 #include <unistd.h>
-#include <stdio.h>
-#include <malloc.h>
 #include <sys/mman.h>
 
 namespace xyz {
@@ -50,13 +47,13 @@ namespace xyz {
 	}
 }
 
-const char add [] =
-	"\x8d\x04\x37" // lea eax, [rdi+rsi]
-	"\xc3";        // ret
-
 int main(int argc, char const *argv[]) {
-	xyz::make_executable(add);
-	std::cout << xyz::invoke<int, int, int>(add, 1, 2) << std::endl; // 3
+	std::ifstream ifile{"jit/test.raw"};
+	std::ostringstream oss;
+	oss << ifile.rdbuf();
+	std::string code = oss.str();
+	xyz::make_executable(code);
+	std::cout << xyz::invoke<int, int, int>(code, 1, 2) << std::endl; // 3
 	return 0;
 }
 
