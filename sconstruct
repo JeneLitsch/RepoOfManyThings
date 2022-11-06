@@ -43,4 +43,5 @@ def compile(env, dir):
 # compile(env, "fixed_string")
 # compile(env, "jit")
 # compile(env, "ascii_game")
-compile(env, "type_deduction")
+compile(env, "pow")
+# compile(env, "type_deduction")
