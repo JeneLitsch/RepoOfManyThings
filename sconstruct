@@ -12,8 +12,8 @@ def glob(dirs):
 	return files
 
 env = Environment(
-	# CXX = "clang++-12",
-	CXX = "g++-10",
+	CXX = "clang++-12",
+	# CXX = "g++-10",
 	CXXFLAGS = flags,
 	CPPPATH = [
 		".",
@@ -43,5 +43,6 @@ def compile(env, dir):
 # compile(env, "fixed_string")
 # compile(env, "jit")
 # compile(env, "ascii_game")
-compile(env, "pow")
+# compile(env, "pow")
+compile(env, "memory")
 # compile(env, "type_deduction")
