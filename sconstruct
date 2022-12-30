@@ -44,5 +44,6 @@ def compile(env, dir):
 # compile(env, "jit")
 # compile(env, "ascii_game")
 # compile(env, "pow")
-compile(env, "memory")
+compile(env, "litan1")
+# compile(env, "memory")
 # compile(env, "type_deduction")
