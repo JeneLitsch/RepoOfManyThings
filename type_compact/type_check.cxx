@@ -73,6 +73,11 @@ bool is_optional(const Type & type) {
 }
 
 
+bool is_fx_ptr(const Type & type) {
+	return start_code_of(type) == TypeCode::FX_PTR;
+}
+
+
 
 bool operator==(const Type & l, const Type & r) {
 	return (l <=> r) == 0;

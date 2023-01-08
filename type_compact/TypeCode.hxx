@@ -17,4 +17,5 @@ enum class TypeCode : std::uint8_t {
 	EMPTY_ARRAY,
 	MAP,
 	OPTIONAL,
+	FX_PTR,
 };

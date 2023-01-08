@@ -3,6 +3,26 @@
 
 namespace {
 	using It = std::vector<TypeCode>::const_iterator;
+	std::uint64_t other_head_size(It begin) {
+		std::uint64_t size0 = static_cast<std::uint64_t>(*++begin);
+		std::uint64_t size1 = static_cast<std::uint64_t>(*++begin);
+		return 1 + 2 + (size0 + (size1 << 8));
+	}
+
+
+
+	std::uint64_t head_size(const Type & type) {
+		if(is_other(type)) {
+			return other_head_size(std::begin(type.get_code()));
+		}
+		return 1;
+	}
+
+	const std::optional<It> end_of_fx_ptr(const std::optional<It> & code, const It & end) {
+
+	}
+
+	using It = std::vector<TypeCode>::const_iterator;
 	const std::optional<It> end_of_type(const std::optional<It> & code, const It & end) {
 		
 		if(!code) return code;
@@ -10,7 +30,7 @@ namespace {
 
 		switch (**code) {
 		case TypeCode::INVALID:     return *code + 1;
-		case TypeCode::OTHER:       return end_of_type(*code + 1, end);
+		case TypeCode::OTHER:       return end_of_type(*code + other_head_size(*code), end);
 		case TypeCode::ANY:         return *code + 1;
 		case TypeCode::BOOL:        return *code + 1;
 		case TypeCode::CHAR:        return *code + 1;
@@ -21,20 +41,13 @@ namespace {
 		case TypeCode::EMPTY_ARRAY: return *code + 1;
 		case TypeCode::MAP:         return end_of_type(end_of_type(*code + 1, end), end);
 		case TypeCode::OPTIONAL:    return end_of_type(*code + 1, end);
+		// case TypeCode::FX_PTR:      return end_of_fx_ptr(*code + 1, end);
 		}
 		return *code + 1;
 	}
 
 
-	std::uint64_t head_size(const Type & type) {
-		if(is_other(type)) {
-			auto begin = std::begin(type.get_code());
-			std::uint64_t size0 = static_cast<std::uint64_t>(*++begin);
-			std::uint64_t size1 = static_cast<std::uint64_t>(*++begin);
-			return 1 + 2 + (size0 + (size1 << 8));
-		}
-		return 1;
-	}	
+
 
 
 
@@ -82,6 +95,8 @@ std::vector<Type> subtypes(const Type & type) {
 
 
 std::optional<Type> element_type(const Type & type) {
+	const auto compatible = is_array(type) || is_optional(type);
+	if(!compatible) return std::nullopt;
 	const auto types = subtypes(type);
 	if(types.size() <= 0) return std::nullopt;
 	return types[0];
@@ -90,6 +105,8 @@ std::optional<Type> element_type(const Type & type) {
 
 
 std::optional<Type> key_type(const Type & type) {
+	const auto compatible = is_map(type);
+	if(!compatible) return std::nullopt;
 	const auto types = subtypes(type);
 	if(types.size() <= 0) return std::nullopt;
 	return types[0];
@@ -98,10 +115,9 @@ std::optional<Type> key_type(const Type & type) {
 
 
 std::optional<Type> value_type(const Type & type) {
+	const auto compatible = is_map(type);
+	if(!compatible) return std::nullopt;
 	const auto types = subtypes(type);
 	if(types.size() <= 1) return std::nullopt;
 	return types[1];
 }
-
-
-

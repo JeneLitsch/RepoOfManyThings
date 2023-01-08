@@ -10,6 +10,8 @@ int main() {
 	Type t_array_bool = array(boolean());
 	Type t_map_int_bool = map(integer(), boolean());
 	Type t_other = other("TTT");
+	Type t_fx_ptr = fx_ptr(integer(), {array(floating()), string()});
+
 	std::cout << t_bool << "\n";
 	std::cout << t_char << "\n";
 	std::cout << t_int << "\n";
@@ -17,6 +19,7 @@ int main() {
 	std::cout << t_array_int << "\n";
 	std::cout << t_map_int_bool << "\n";
 	std::cout << t_other << "\n";
+	std::cout << t_fx_ptr << "\n";
 
 	std::cout << is_any(t_bool) << "\n";
 	std::cout << is_boolean(t_bool) << "\n";
@@ -24,9 +27,9 @@ int main() {
 	std::cout << (t_bool == boolean()) << "\n";
 	std::cout << (t_array_int == t_array_bool) << "\n";
 
-	std::cout << *element_type(t_array_int) << "\n";
-	std::cout << *key_type(t_map_int_bool) << "\n";
-	std::cout << *value_type(t_map_int_bool) << "\n";
+	std::cout << element_type(t_array_int).value() << "\n";
+	std::cout << key_type(t_map_int_bool).value() << "\n";
+	std::cout << value_type(t_map_int_bool).value() << "\n";
 
 	std::cout << subtypes(t_bool).size();
 	std::cout << subtypes(t_array_bool).size();

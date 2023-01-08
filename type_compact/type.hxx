@@ -27,6 +27,7 @@ Type array();
 Type array(const Type & elem_type);
 Type map(const Type & key_type, const Type & value_type);
 Type optional(const Type & wrapped_type);
+Type fx_ptr(const Type & return_type, const std::vector<Type> & parameters);
 
 bool is_any(const Type & type);
 bool is_other(const Type & type);
@@ -39,6 +40,7 @@ bool is_array(const Type & type);
 bool is_empty_array(const Type & type);
 bool is_map(const Type & type);
 bool is_optional(const Type & type);
+bool is_fx_ptr(const Type & type);
 
 std::vector<Type> subtypes(const Type & type);
 std::optional<Type> element_type(const Type & type);

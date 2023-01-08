@@ -2,17 +2,20 @@
 
 
 namespace {
-	const TypeCode * print_impl(std::ostream & out, const TypeCode * type);
+
+	
+	using It = std::vector<TypeCode>::const_iterator;
+	It print_impl(std::ostream & out, It type);
 
 
-	const TypeCode * print_impl_primary(const std::string_view name, std::ostream & out, const TypeCode * type) {
+	It print_impl_primary(const std::string_view name, std::ostream & out, It type) {
 		out << name;
 		return type + 1;
 	}
 
 
 
-	const TypeCode * print_impl_unary(const std::string_view name, std::ostream & out, const TypeCode * type) {
+	It print_impl_unary(const std::string_view name, std::ostream & out, It type) {
 		out << name;
 		out << "<";
 		const auto next = print_impl(out, type+1);
@@ -22,7 +25,7 @@ namespace {
 
 
 
-	const TypeCode * print_impl_binary(const std::string_view name, std::ostream & out, const TypeCode * type) {
+	It print_impl_binary(const std::string_view name, std::ostream & out, It type) {
 		out << name;
 		out << "<";
 		const auto next0 = print_impl(out, type+1);
@@ -34,19 +37,41 @@ namespace {
 
 
 
-	const TypeCode * print_impl_other(std::ostream & out, const TypeCode * type) {
-		std::uint16_t size0 = static_cast<std::uint16_t>(*(++type));
-		std::uint16_t size1 = static_cast<std::uint16_t>(*(++type));
-		std::uint16_t size = size0 + (size1 << 8);
-		for(std::uint16_t i = 0; i < size; ++i) {
-			out << static_cast<char>(*++type);
+	It print_impl_other(std::ostream & out, It type) {
+		std::uint64_t size0 = static_cast<std::uint64_t>(*++type);
+		std::uint64_t size1 = static_cast<std::uint64_t>(*++type);
+		std::uint8_t size = size0 + (size1 << 8);
+		for(int i = 0; i < size; ++i) {
+			++type;
+			out << static_cast<char>(*type);
 		}
 		return type;
 	}
 
 
 
-	const TypeCode * print_impl(std::ostream & out, const TypeCode * type) {
+	It print_impl_fx_ptr(std::ostream & out, It type) {
+		++type;
+		const auto arity = static_cast<std::uint8_t>(*type);
+
+		std::ostringstream return_type;
+		++type;
+		type = print_impl(return_type, type);
+		
+		out << "(";
+		for(auto i = 0; i < arity; ++i) {
+			if(i) out << ", ";
+			type = print_impl(out, type);
+		}
+		out << ")->";
+		out << return_type.str();
+
+		return type;
+	}
+
+
+
+	It print_impl(std::ostream & out, It type) {
 		switch (*type) {
 			case TypeCode::INVALID:     return print_impl_primary("<invalid>", out, type);
 			case TypeCode::OTHER:       return print_impl_other(out, type);
@@ -60,6 +85,7 @@ namespace {
 			case TypeCode::EMPTY_ARRAY: return print_impl_primary("array<>", out, type);
 			case TypeCode::MAP:         return print_impl_binary("map", out, type);
 			case TypeCode::OPTIONAL:    return print_impl_unary("optional", out, type);
+			case TypeCode::FX_PTR:      return print_impl_fx_ptr(out, type);
 		}
 		return type;
 	}
@@ -68,14 +94,9 @@ namespace {
 
 
 std::ostream & operator<<(std::ostream & out, const Type & type) {
-	print_impl(out, type.get_code().data());
+	print_impl(out, std::begin(type.get_code()));
 	return out;
 }
 
 
 
-std::string to_string(const Type & type) {
-	std::ostringstream oss;
-	oss << type;
-	return oss.str();
-}
