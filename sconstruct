@@ -45,6 +45,7 @@ def compile(env, dir):
 # compile(env, "ascii_game")
 # compile(env, "pow")
 # compile(env, "litan1")
-compile(env, "type_erasure")
+compile(env, "type_compact")
+# compile(env, "type_erasure")
 # compile(env, "memory")
 # compile(env, "type_deduction")
