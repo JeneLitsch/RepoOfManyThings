@@ -7,6 +7,7 @@ namespace {
 }
 
 
+
 bool is_any(const Type & type) {
 	return start_code_of(type) == TypeCode::ANY;
 }
@@ -71,6 +72,7 @@ bool is_map(const Type & type) {
 bool is_optional(const Type & type) {
 	return start_code_of(type) == TypeCode::OPTIONAL;
 }
+
 
 
 bool is_fx_ptr(const Type & type) {

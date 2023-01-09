@@ -31,10 +31,11 @@ int main() {
 	std::cout << key_type(t_map_int_bool).value() << "\n";
 	std::cout << value_type(t_map_int_bool).value() << "\n";
 
-	std::cout << subtypes(t_bool).size();
-	std::cout << subtypes(t_array_bool).size();
-	std::cout << subtypes(t_map_int_bool).size();
-	std::cout << subtypes(t_other).size();
+	std::cout << subtypes(t_bool).size() << "\n";
+	std::cout << subtypes(t_array_bool).size() << "\n";
+	std::cout << subtypes(t_map_int_bool).size() << "\n";
+	std::cout << subtypes(t_fx_ptr).size() << "\n";
+	std::cout << subtypes(t_other).size() << "\n";
 	// std::cout << subtype(t_bool, 0).value() << "\n";
 	return 0;
 }

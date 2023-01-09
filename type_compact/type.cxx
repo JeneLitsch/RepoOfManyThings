@@ -15,12 +15,29 @@ namespace {
 		if(is_other(type)) {
 			return other_head_size(std::begin(type.get_code()));
 		}
+		if(is_fx_ptr(type)) {
+			return 2;
+		}
 		return 1;
 	}
 
-	const std::optional<It> end_of_fx_ptr(const std::optional<It> & code, const It & end) {
 
+	
+	const std::optional<It> end_of_type(const std::optional<It> & code, const It & end);
+
+
+
+	const std::optional<It> end_of_fx_ptr(const std::optional<It> & code, const It & end) {
+		auto it = code;
+		auto size = static_cast<std::uint8_t>(*++*it);
+		++*it;
+		for(int i = 0; i < size; ++i) {
+			it = end_of_type(it,end);
+		}
+		return it;
 	}
+
+
 
 	using It = std::vector<TypeCode>::const_iterator;
 	const std::optional<It> end_of_type(const std::optional<It> & code, const It & end) {
@@ -41,13 +58,10 @@ namespace {
 		case TypeCode::EMPTY_ARRAY: return *code + 1;
 		case TypeCode::MAP:         return end_of_type(end_of_type(*code + 1, end), end);
 		case TypeCode::OPTIONAL:    return end_of_type(*code + 1, end);
-		// case TypeCode::FX_PTR:      return end_of_fx_ptr(*code + 1, end);
+		case TypeCode::FX_PTR:      return end_of_fx_ptr(*code + 1, end);
 		}
 		return *code + 1;
 	}
-
-
-
 
 
 
