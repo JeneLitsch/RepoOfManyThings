@@ -4,3 +4,4 @@ make -j8
 cd ..
 mkdir bin
 mv ./build/bin/visit_erased bin/visit_erased
+mv ./build/bin/string_interpolation bin/string_interpolation

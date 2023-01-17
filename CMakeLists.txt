@@ -26,3 +26,4 @@ add_compile_options(
 )
 
 add_subdirectory(visit_erased)
+add_subdirectory(string_interpolation)
