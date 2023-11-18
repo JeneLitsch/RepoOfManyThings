@@ -1,5 +1,6 @@
 {
 	"files.associations": {
+		"*.tmj": "json",
 		"array": "cpp",
 		"atomic": "cpp",
 		"bit": "cpp",
@@ -63,6 +64,7 @@
 		"numbers": "cpp",
 		"stop_token": "cpp",
 		"thread": "cpp",
-		"set": "cpp"
+		"set": "cpp",
+		"cinttypes": "cpp"
 	}
 }

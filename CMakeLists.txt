@@ -25,5 +25,4 @@ add_compile_options(
 	-Wno-unknown-pragmas 
 )
 
-add_subdirectory(visit_erased)
-add_subdirectory(string_interpolation)
+add_subdirectory(allocator)
